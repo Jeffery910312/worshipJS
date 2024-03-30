@@ -6,6 +6,6 @@ export default class Game3 extends Phaser.Scene{
 
     create()
     {
-        var text3 = this.add.text(950, 200, 'scene3', { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
+        var text3 = this.add.text(800, 200, '同意後跳轉到感測的頁面', { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
     }
 }

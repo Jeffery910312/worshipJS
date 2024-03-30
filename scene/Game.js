@@ -3,7 +3,7 @@ import Guanwe1Mao from "../sprite/Guanwe1Mao.js"
 var utterance = new SpeechSynthesisUtterance();
 utterance.text = "遊戲開始。";
 utterance.lang = "zh-TW";
-speechSynthesis.speak(utterance);
+
 
 var expectedKey = 1;
 var godsArray = ["天公", "孔子", "第三個神","第四個神","第五個神","第六個神","虎爺"];
@@ -14,10 +14,13 @@ export default class Game extends Phaser.Scene{
     }
     
     create(){
+        this.add.image(965, 540, 'bgLastDinner');
         this.guanwe1Mao = new Guanwe1Mao(this)
 
+        speechSynthesis.speak(utterance);
+
         // 添加文字对象
-        this.text = this.add.text(400, 300, '孔子的供品說明', { fontFamily: 'Arial', fontSize: 48, color: '#ffffff' });
+        this.text = this.add.text(965, 800, '孔子的供品說明', { fontFamily: 'Arial', fontSize: 48, color: '#ffffff' });
         this.text.setOrigin(0.5);
         this.text.setVisible(false);
 
