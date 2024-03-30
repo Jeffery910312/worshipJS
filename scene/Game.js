@@ -1,6 +1,12 @@
 import Guanwe1Mao from "../sprite/Guanwe1Mao.js"
 
+var utterance = new SpeechSynthesisUtterance();
+utterance.text = "遊戲開始。";
+utterance.lang = "zh-TW";
+speechSynthesis.speak(utterance);
+
 var expectedKey = 1;
+var godsArray = ["天公", "孔子", "第三個神","第四個神","第五個神","第六個神","虎爺"];
 
 export default class Game extends Phaser.Scene{
         constructor(){
@@ -82,12 +88,14 @@ document.addEventListener('keydown', (event) => {
                 // 如果按键顺序正确，增加期待的按键值
                 expectedKey++;
                 if (expectedKey > 7) {
-                    alert("恭喜！您已按下全部按键。");
+                    // alert("恭喜！您已按下全部按键。");
                     // expectedKey = 1;
                 }
             } else {
                 // 如果按键顺序错误，显示正确的按键值
-                alert("请按下 " + expectedKey + " 键。");
+                utterance.text = "請先去拜" + godsArray[expectedKey-1];
+                speechSynthesis.speak(utterance);
+                // alert("请按下 " + expectedKey + " 键。");
             }
         }
 
