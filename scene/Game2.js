@@ -19,7 +19,7 @@ export default class Game2 extends Phaser.Scene {
         this.confucius = new Confucius(this);
         this.dialog = new Dialog(this);
 
-        this.textAgree = this.add.text(965, 1000, '是否同意感測心率，回答同意或不同意', { fontFamily: 'Arial', fontSize: 32, color: '#000000' });
+        this.textAgree = this.add.text(965, 1000, '是否感測心率，回答「同意」或「不同意」', { fontFamily: 'Arial', fontSize: 32, color: '#000000' });
         this.textAgree.setOrigin(0.5);
         this.textChoice = this.add.text(450, 800, '您說的話會顯示在這', { fontFamily: 'Arial', fontSize: 32, color: '#FFFFFF' });
         this.textChoice.setOrigin(0.5);
