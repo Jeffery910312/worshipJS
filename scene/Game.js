@@ -98,11 +98,8 @@ document.addEventListener('keydown', (event) => {
             if (keyPressed == expectedKey) {
                 // 如果按键顺序正确，增加期待的按键值
                 expectedKey++;
-                if (expectedKey > 7) {
-                    // alert("恭喜！您已按下全部按键。");
-                    // expectedKey = 1;
-                }
-            } else {
+                
+            } else if (expectedKey <= 7){
                 // 如果按键顺序错误，显示正确的按键值
                 utterance.text = "請先去拜" + godsArray[expectedKey-1];
                 speechSynthesis.speak(utterance);
@@ -113,6 +110,7 @@ document.addEventListener('keydown', (event) => {
         
         //切換場景，如果語音辨識停掉的話
             this.input.keyboard.on('keydown-B', () => {
+                expectedKey = 8;
                 this.scene.start('game2Scene');
             });
 

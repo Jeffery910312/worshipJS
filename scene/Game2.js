@@ -6,6 +6,7 @@ var utterance = new SpeechSynthesisUtterance();
 utterance.text = "感測心率選擇";
 utterance.lang = "zh-TW";
 
+
 export default class Game2 extends Phaser.Scene {
     constructor() {
         super("game2Scene");
@@ -15,6 +16,7 @@ export default class Game2 extends Phaser.Scene {
     }
 
     create() {
+        
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
         this.dialog = new Dialog(this);
@@ -54,7 +56,7 @@ export default class Game2 extends Phaser.Scene {
                 }, 3000);
             } else if (this.result.indexOf('同意') !== -1) {
                 this.textResult.setText('3秒後跳轉...');
-                this.recognition.stop();
+                // this.recognition.stop();
                 this.changeToGame3 = 1;
             } else {
                 this.textResult.setText('再說一次');
@@ -65,6 +67,7 @@ export default class Game2 extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-B', () => {
             this.scene.start('game3Scene');
+            this.recognition.stop();
         });
     }
 
@@ -75,13 +78,14 @@ export default class Game2 extends Phaser.Scene {
         }
 
         if (this.changeToGame3 === 1) {
+            this.recognition.stop();
             setTimeout(() => {
             this.scene.start('game3Scene');
             }, 3000);
         }
     }
 
-    // 在场景销毁时停止语音识别
+    // 在场景销毁时停止语音识别(根本沒用到)
     shutdown() {
         this.recognition.stop();
     }
