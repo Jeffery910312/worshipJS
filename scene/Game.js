@@ -3,7 +3,7 @@ import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
 import Dialog from "../sprite/Dialog.js";
 
 var utterance = new SpeechSynthesisUtterance();
-utterance.text = "遊戲開始。";
+utterance.text = "先放供品再參拜";
 utterance.lang = "zh-TW";
 
 
@@ -19,26 +19,28 @@ export default class Game extends Phaser.Scene{
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
         this.dialog = new Dialog(this);
-        
 
+        
+        
         speechSynthesis.speak(utterance);
 
         // 添加文字对象
-        this.text = this.add.text(965, 1000, '孔子的供品說明', { fontFamily: 'Arial', fontSize: 48, color: '#57b38a' });
+        this.text = this.add.text(965, 1020, '先放上孔子供品，再按順序參拜', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
         this.text.setOrigin(0.5);
-        this.text.setVisible(false);
+
+        // 供品說明圖片
+        this.offerings = this.add.image(965,300,'offerings');
+        this.offerings.setVisible(false);
 
         // 监听键盘事件
         this.input.keyboard.on('keydown-Q', ()=> {
-            // 按下 Q 键时显示文字
-            this.dialog.showDialog();
-            this.text.setVisible(true);
+            this.offerings.setVisible(true);
+            
         });
 
         this.input.keyboard.on('keyup-Q', ()=> {
-            // 放开 Q 键时隐藏文字
-            this.dialog.hideDialog();
-            this.text.setVisible(false);
+            this.offerings.setVisible(false);
+            
         });
 
         document.addEventListener('keydown', (event) => {
@@ -109,7 +111,7 @@ document.addEventListener('keydown', (event) => {
         }
 
         
-        //切換場景
+        //切換場景，如果語音辨識停掉的話
             this.input.keyboard.on('keydown-B', () => {
                 this.scene.start('game2Scene');
             });
