@@ -1,3 +1,6 @@
+import Confucius from "../sprite/Confucius.js";
+import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
+
 export default class Game2 extends Phaser.Scene {
     constructor() {
         super("game2Scene");
@@ -7,9 +10,12 @@ export default class Game2 extends Phaser.Scene {
     }
 
     create() {
-        var textAgree = this.add.text(800, 200, '是否同意感測心率，回答同意或不同意', { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
-        var textChoice = this.add.text(800, 400, '您說的話會顯示在這', { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
-        var textResult = this.add.text(800, 600, '結果', { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
+        this.confuciusTemple = new ConfuciusTemple(this);
+        this.confucius = new Confucius(this);
+
+        var textAgree = this.add.text(700, 1000, '是否同意感測心率，回答同意或不同意', { fontFamily: 'Arial', fontSize: 32, color: '#57b38a' });
+        var textChoice = this.add.text(800, 400, '您說的話會顯示在這', { fontFamily: 'Arial', fontSize: 32, color: '#57b38a' });
+        var textResult = this.add.text(800, 600, '結果', { fontFamily: 'Arial', fontSize: 32, color: '#57b38a' });
 
         this.recognition.continuous = true;
         this.recognition.interimResults = true;

@@ -1,4 +1,6 @@
-import Guanwe1Mao from "../sprite/Guanwe1Mao.js"
+import Confucius from "../sprite/Confucius.js";
+import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
+import Dialog from "../sprite/Dialog.js";
 
 var utterance = new SpeechSynthesisUtterance();
 utterance.text = "遊戲開始。";
@@ -14,24 +16,28 @@ export default class Game extends Phaser.Scene{
     }
     
     create(){
-        this.add.image(965, 540, 'bgLastDinner');
-        this.guanwe1Mao = new Guanwe1Mao(this)
+        this.confuciusTemple = new ConfuciusTemple(this);
+        this.confucius = new Confucius(this);
+        this.dialog = new Dialog(this);
+        
 
         speechSynthesis.speak(utterance);
 
         // 添加文字对象
-        this.text = this.add.text(965, 800, '孔子的供品說明', { fontFamily: 'Arial', fontSize: 48, color: '#ffffff' });
+        this.text = this.add.text(965, 1000, '孔子的供品說明', { fontFamily: 'Arial', fontSize: 48, color: '#57b38a' });
         this.text.setOrigin(0.5);
         this.text.setVisible(false);
 
         // 监听键盘事件
         this.input.keyboard.on('keydown-Q', ()=> {
             // 按下 Q 键时显示文字
+            this.dialog.showDialog();
             this.text.setVisible(true);
         });
 
         this.input.keyboard.on('keyup-Q', ()=> {
             // 放开 Q 键时隐藏文字
+            this.dialog.hideDialog();
             this.text.setVisible(false);
         });
 
@@ -117,6 +123,6 @@ document.addEventListener('keydown', (event) => {
             this.scene.start('game2Scene');
         }
 
-        this.guanwe1Mao.update()
+        this.confucius.update()
     }
 }

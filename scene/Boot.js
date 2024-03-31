@@ -50,9 +50,9 @@ export default class Boot extends Phaser.Scene{
             this.scene.start("gameScene");
         }, this);
         
-        this.load.image("guanwe1Mao",'../assets/guanwe1Mao.png')
-        this.load.image("guanwe1Wink",'../assets/guanwe1Wink.png')
-        this.load.image("bgLastDinner",'../assets/lastDinner.png')
+        this.load.image("confucius",'https://media.discordapp.net/attachments/1215919429830053888/1223901557452574770/66b3a7466d61b345.png?ex=661b8a26&is=66091526&hm=e7690486fbaa3bb66f096fefccf9c5c3ee3e77d1cddf6beb40e2e1c1a05395c3&=&format=webp&quality=lossless&width=350&height=350')
+        // this.load.image("guanwe1Mao",'../assets/guanwe1Mao.png')
+        this.load.image("confuciusTemple",'https://cdn.discordapp.com/attachments/1215919429830053888/1223907956463112272/confuciusTemple.png?ex=661b901b&is=66091b1b&hm=54776ae41ba74bb333abafc2c869804a2da30400f707aef98f0720c70d4c656c&')
     }
     create(){
         //anims
