@@ -58,9 +58,9 @@ export default class Boot extends Phaser.Scene{
 
         this.load.image("progressBar",'https://cdn.discordapp.com/attachments/1215919429830053888/1224990603541217300/5dd7591d3a77abcd.png?ex=661f8067&is=660d0b67&hm=f66741ad8687344ee83b646f66ca1f4d507f1fd2396c1345f60dc5ac0f4cda17&')
 
-        this.load.audio("correct",'assets/correct.mp3')
+        this.load.audio("correct",'../assets/correct.mp3')
 
-        this.load.audio("wrong",'assets/wrong.mp3')
+        this.load.audio("wrong",'../assets/wrong.mp3')
     }
     create(){
         //anims
