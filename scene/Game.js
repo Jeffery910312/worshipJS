@@ -55,6 +55,7 @@ while (chosenQuestions.length < 3) {
 export default class Game extends Phaser.Scene{
         constructor(){
         super("gameScene")
+        this.isSpeaking = false ;
     }
     
     create(){
@@ -112,28 +113,42 @@ export default class Game extends Phaser.Scene{
 
         displayQuestion()
 
-        // 监听键盘回答
-        this.input.keyboard.on('keydown-ONE', ()=> {
-            selectedOptions.push(1);
-            checkAnswer(1);
-        });
+        utterance.onstart = () => {
+          this.isSpeaking = true;
+          console.log("正在說話");
+          this.input.keyboard.removeListener('keydown-ONE');
+          this.input.keyboard.removeListener('keydown-TWO');
+          this.input.keyboard.removeListener('keydown-THREE');
+        };
 
-        this.input.keyboard.on('keydown-TWO', ()=> {
-            selectedOptions.push(2);
-            checkAnswer(2);
-        });
-
-        this.input.keyboard.on('keydown-THREE', ()=> {
-            selectedOptions.push(3);
-            checkAnswer(3);
-        });
+        utterance.onend = () => {
+          this.isSpeaking = false;
+          console.log("閉嘴");
+          // 添加新的按键监听事件
+          this.input.keyboard.on('keydown-ONE', () => {
+              selectedOptions.push(1);
+              checkAnswer(1);
+          });
+      
+          this.input.keyboard.on('keydown-TWO', () => {
+              selectedOptions.push(2);
+              checkAnswer(2);
+          });
+      
+          this.input.keyboard.on('keydown-THREE', () => {
+              selectedOptions.push(3);
+              checkAnswer(3);
+          });
+      };
+      
+      
 
         this.input.keyboard.on('keydown-F', ()=> 
         {
             this.scene.start('game2Scene');
         });
-        
-        }
+      
+    }
 
     update(){
 
