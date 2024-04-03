@@ -6,6 +6,7 @@ import Dialog from "../sprite/Dialog.js";
 var utterance = new SpeechSynthesisUtterance();
 utterance.text = "請持續握住保生大帝的手";
 utterance.lang = "zh-TW";
+utterance.rate = 1.5;
 
 export default class Game3 extends Phaser.Scene{
     
@@ -15,18 +16,23 @@ export default class Game3 extends Phaser.Scene{
 
     create()
     {
+        setTimeout(() => {
         this.scene.remove('game2Scene');
-
+        },3500);
+        
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
         this.dialog = new Dialog(this);
         // this.game2 = new Game2(this);
 
+        // 添加音效
+        this.soundCorrect = this.sound.add('correct');
+
         this.text3 = this.add.text(965, 1020, '請持續握住保生大帝的手', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
         this.text3.setOrigin(0.5);
 
         // 直接作为场景对象属性添加进度条
-        this.progressBar = this.add.sprite(400, 300, 'progressBar');
+        this.progressBar = this.add.sprite(400, 300, 'progressBar').setVisible(false);
         this.progressBar.setOrigin(0, 0.5); // 设置进度条的原点为左侧中心
 
         // 初始进度为0
@@ -35,16 +41,18 @@ export default class Game3 extends Phaser.Scene{
 
         // 模拟等待2分钟的计时器
         this.waitTimer = this.time.addEvent({
-            delay: 2000, // 等待时间2分钟（以毫秒为单位）
+            delay: 150, // 等待时间2分钟
             callback: function() {
-                this.progress += 0.01; // 每次增加1%的进度
+                this.progress += 0.001; // 每次增加1%的进度
                 if (this.progress >= 1) {
                     this.progress = 1; // 进度达到100%后停止更新
                     this.waitTimer.remove(); // 移除计时器
+                    this.soundCorrect.play();
                 }
 
                 // 更新进度条长度
                 this.progressBar.setDisplaySize(this.progress * this.progressBarWidth, this.progressBar.height);
+                this.progressBar.setVisible(true);
             },
             callbackScope: this,
             loop: true // 循环计时器，直到达到指定的总时间

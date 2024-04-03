@@ -6,6 +6,7 @@ import Dialog from "../sprite/Dialog.js";
 var utterance = new SpeechSynthesisUtterance();
 utterance.text = "遊戲開始";
 utterance.lang = "zh-TW";
+utterance.rate = 1.7;
 
 // 定義題庫
 const questions = [
@@ -68,6 +69,10 @@ export default class Game extends Phaser.Scene{
         // // 語音講話
         // speechSynthesis.speak(utterance);
 
+        // 添加音效
+        this.soundCorrect = this.sound.add('correct');
+        this.soundWrong = this.sound.add('wrong');
+
         // 添加問題文字物件
         this.textQuestion = this.add.text(965,1020,'', { fontFamily: 'Arial', fontSize: 48, color: '#000000' })
         this.textQuestion.setOrigin(0.5);
@@ -87,15 +92,20 @@ export default class Game extends Phaser.Scene{
         const checkAnswer = (answer) => {
         const questionObj = questions[chosenQuestions[currentQuestionIndex]];
         if (answer - 1 === questionObj.correctAnswer) {
-            console.log("正確答案！");
+            console.log("正確");
+            this.soundCorrect.play();
         } else {
-            console.log("錯誤答案，請再試一次。");
+            console.log("錯誤");
+            this.soundWrong.play();
         }
         currentQuestionIndex++;
         if (currentQuestionIndex < 3) {
             displayQuestion();
         } else {
             console.log("遊戲結束！");
+            this.textQuestion.setText('按照流程圖祭拜孔子');
+            utterance.text = '請開始祭拜孔子';
+            speechSynthesis.speak(utterance);
             this.offerings.setVisible(true);
         }
         };

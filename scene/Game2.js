@@ -5,6 +5,7 @@ import Dialog from "../sprite/Dialog.js";
 var utterance = new SpeechSynthesisUtterance();
 utterance.text = "感測心率選擇";
 utterance.lang = "zh-TW";
+utterance.rate = 1.5;
 
 
 export default class Game2 extends Phaser.Scene {
@@ -56,8 +57,11 @@ export default class Game2 extends Phaser.Scene {
                 }, 3000);
             } else if (this.result.indexOf('同意') !== -1) {
                 this.textResult.setText('3秒後跳轉...');
-                // this.recognition.stop();
-                this.changeToGame3 = 1;
+                this.recognition.stop();
+                // this.changeToGame3 = 1;
+                setTimeout(() => {
+                this.scene.start('game3Scene');
+                }, 3000); 
             } else {
                 this.textResult.setText('再說一次');
             }
@@ -69,9 +73,10 @@ export default class Game2 extends Phaser.Scene {
             this.recognition.stop();
             setTimeout(() => {
             this.scene.start('game3Scene');
-            
             }, 1000);
         });
+
+        
     }
 
     update() {
@@ -80,13 +85,13 @@ export default class Game2 extends Phaser.Scene {
             this.spoken = true; // Set the flag to true
         }
 
-        if (this.changeToGame3 === 1) {
-            this.recognition.stop();
-            setTimeout(() => {
-            this.scene.start('game3Scene');
-            
-            }, 3000);
-        }
+        // if (this.changeToGame3 === 1) {
+        //     this.recognition.stop();
+        //     setTimeout(() => {
+        //     this.scene.start('game3Scene');
+        //     }, 3000);
+        // }
+        
     }
 
 }
