@@ -61,8 +61,12 @@ export default class Game extends Phaser.Scene{
         this.confucius = new Confucius(this);
         this.dialog = new Dialog(this);
 
-        // 語音講話
-        speechSynthesis.speak(utterance);
+        // SOP圖片設定
+        this.offerings = this.add.image(965,300,'offerings');
+        this.offerings.setVisible(false);
+
+        // // 語音講話
+        // speechSynthesis.speak(utterance);
 
         // 添加問題文字物件
         this.textQuestion = this.add.text(965,1020,'', { fontFamily: 'Arial', fontSize: 48, color: '#000000' })
@@ -92,6 +96,7 @@ export default class Game extends Phaser.Scene{
             displayQuestion();
         } else {
             console.log("遊戲結束！");
+            this.offerings.setVisible(true);
         }
         };
 
@@ -112,31 +117,16 @@ export default class Game extends Phaser.Scene{
             selectedOptions.push(3);
             checkAnswer(3);
         });
-        
 
-        // 供品說明圖片
-        this.offerings = this.add.image(965,300,'offerings');
-        this.offerings.setVisible(false);
-
-        // 监听键盘事件
-        this.input.keyboard.on('keydown-Q', ()=> {
-            this.offerings.setVisible(true);
+        this.input.keyboard.on('keydown-F', ()=> 
+        {
+            this.scene.start('game2Scene');
         });
-
-        this.input.keyboard.on('keyup-Q', ()=> {
-            this.offerings.setVisible(false);
-            
-        });
-
         
-
         }
 
     update(){
 
-        // if(expectedKey > 7)
-        // {
-        //     this.scene.start('game2Scene');
-        // }
+        
     }
 }

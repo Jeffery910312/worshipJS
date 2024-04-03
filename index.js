@@ -18,4 +18,3 @@ import Game3Scene from "./scene/Game3.js"
         };
 
         const game = new Phaser.Game(config);
-

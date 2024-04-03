@@ -39,7 +39,7 @@ export default class Game2 extends Phaser.Scene {
         this.recognition.onend = () => {
             if (this.recognition.status === true) {
                 this.recognition.start();
-            } else {
+            } else if (this.recognition.status === false){
                 this.textChoice.setText('停止辨識');
             }
         };
@@ -65,9 +65,12 @@ export default class Game2 extends Phaser.Scene {
 
         this.recognition.start();
 
-        this.input.keyboard.on('keydown-B', () => {
-            this.scene.start('game3Scene');
+        this.input.keyboard.on('keydown-F', () => {
             this.recognition.stop();
+            setTimeout(() => {
+            this.scene.start('game3Scene');
+            
+            }, 1000);
         });
     }
 
@@ -81,12 +84,9 @@ export default class Game2 extends Phaser.Scene {
             this.recognition.stop();
             setTimeout(() => {
             this.scene.start('game3Scene');
+            
             }, 3000);
         }
     }
 
-    // 在场景销毁时停止语音识别(根本沒用到)
-    shutdown() {
-        this.recognition.stop();
-    }
 }
