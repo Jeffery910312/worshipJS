@@ -58,12 +58,52 @@ export default class Game3 extends Phaser.Scene{
             loop: true // 循环计时器，直到达到指定的总时间
         });
 
+            // 定义倒计时文本
+            this.timerText = this.add.text(965, 1060, '', { fontFamily: 'Arial', fontSize: 32, color: '#000000' });
+            this.timerText.setOrigin(0.5);
+
+            // 定义倒计时的总时间（秒）
+            this.totalTime = 150;
+            this.remainingTime = this.totalTime;
+
+            // 创建计时器，每秒更新一次倒计时文本
+            this.timer = this.time.addEvent({
+                delay: 1000, // 1000毫秒（1秒）的间隔
+                callback: this.updateTimer,
+                callbackScope: this,
+                loop: true
+            });
+
         // this.input.keyboard.on('keydown-F', ()=> 
         // {
         //     this.scene.add('game2Scene', this.game2, true);
         // });
 
     }
+
+        // 在 updateTimer 方法中更新倒计时文本并检查时间是否耗尽
+        updateTimer() {
+            this.remainingTime--; // 每秒减少1秒
+
+            if (this.remainingTime >= 0) {
+                // 更新倒计时文本
+                let minutes = Math.floor(this.remainingTime / 60);
+                let seconds = this.remainingTime % 60;
+                this.timerText.setText(`剩餘時間: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+            } else {
+                // 时间耗尽，处理相应逻辑
+                this.timer.remove(); // 移除计时器
+                this.handleTimeUp(); // 处理时间耗尽事件
+            }
+        }
+
+        // 在 handleTimeUp 方法中处理时间耗尽的逻辑
+        handleTimeUp() {
+            // 在时间耗尽时执行的逻辑，例如结束游戏或重置场景等
+            // 可以根据需要进行修改
+            console.log('Time is up!'); // 示例：在控制台打印消息
+        }
+
 
      update() {
         if (!this.spoken) { // If not spoken yet
