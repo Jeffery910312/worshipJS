@@ -11,29 +11,29 @@ utterance.rate = 1.7;
 // 定義題庫
 const questions = [
   {
-    question: "拉姆是什麼?",
-    options: ["麻糬", "史萊姆", "植物"],
+    question: "什麼供品代表聰明",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
+    correctAnswer: 0
+  },
+  {
+    question: "什麼供品代表精明細算",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 2
   },
   {
-    question: "超級拉姆一個月多少錢?",
-    options: ["50", "100", "150"],
-    correctAnswer: 2
+    question: "什麼供品代表文思泉湧",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
+    correctAnswer: 4
   },
   {
-    question: "摩爾拉雅雪山在摩爾城堡的哪個方位?",
-    options: ["東", "西", "南"],
+    question: "什麼供品代表勤勞",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 1
   },
   {
-    question: "菩提大伯的拉姆叫什麼名字?",
-    options: ["小陶", "葡萄", "櫻桃"],
-    correctAnswer: 1
-  },
-  {
-    question: "台服麼麼公主的米米號是多少?",
-    options: ["20000000", "20000001", "20000002"],
-    correctAnswer: 1
+    question: "什麼供品代表好彩頭",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
+    correctAnswer: 3
   },
 ];
 
@@ -109,6 +109,7 @@ export default class Game extends Phaser.Scene{
             speechSynthesis.speak(utterance);
             this.offerings.setVisible(true);
         }
+        
         };
 
         displayQuestion()
@@ -119,6 +120,8 @@ export default class Game extends Phaser.Scene{
           this.input.keyboard.removeListener('keydown-ONE');
           this.input.keyboard.removeListener('keydown-TWO');
           this.input.keyboard.removeListener('keydown-THREE');
+          this.input.keyboard.removeListener('keydown-FOUR');
+          this.input.keyboard.removeListener('keydown-FIVE');
         };
 
         utterance.onend = () => {
@@ -138,6 +141,16 @@ export default class Game extends Phaser.Scene{
           this.input.keyboard.on('keydown-THREE', () => {
               selectedOptions.push(3);
               checkAnswer(3);
+          });
+
+          this.input.keyboard.on('keydown-FOUR', () => {
+              selectedOptions.push(4);
+              checkAnswer(4);
+          });
+
+          this.input.keyboard.on('keydown-FIVE', () => {
+              selectedOptions.push(5);
+              checkAnswer(5);
           });
       };
       
