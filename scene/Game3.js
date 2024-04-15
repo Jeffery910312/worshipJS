@@ -32,11 +32,11 @@ export default class Game3 extends Phaser.Scene{
         this.text3.setOrigin(0.5);
 
         // 直接作为场景对象属性添加进度条
-        this.progressBarBg = this.add.sprite(560, 300, 'progressBar');
+        this.progressBarBg = this.add.sprite(560, 200, 'progressBar');
         this.progressBarBg.setOrigin(0, 0.5);
         this.progressBarBg.alpha = 0.5;
 
-        this.progressBar = this.add.sprite(560, 300, 'progressBar').setVisible(false);
+        this.progressBar = this.add.sprite(560, 200, 'progressBar').setVisible(false);
         this.progressBar.setOrigin(0, 0.5); // 设置进度条的原点为左侧中心
 
         // 初始进度为0

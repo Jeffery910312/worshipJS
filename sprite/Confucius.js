@@ -1,6 +1,6 @@
 export default class Confucius extends Phaser.GameObjects.Sprite{
     constructor(scene){
-        super(scene,965,750,'confucius')
+        super(scene,965,550,'confucius')
 
         scene.add.existing(this)
         scene.physics.add.existing(this)
