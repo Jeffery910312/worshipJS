@@ -66,6 +66,7 @@ export default class Game extends Phaser.Scene{
         // SOP圖片設定
         this.offerings = this.add.image(965,300,'offerings');
         this.offerings.setVisible(false);
+        this.offerings.setScale(0.3);
 
         // // 語音講話
         // speechSynthesis.speak(utterance);

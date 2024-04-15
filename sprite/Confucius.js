@@ -6,7 +6,7 @@ export default class Confucius extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this)
         // this.setPosition(965,750)
 
-        // this.setScale(0.5)
+        this.setScale(0.5)
 
         this.body.setAllowGravity(false);
        
