@@ -51,7 +51,8 @@ export default class Game3 extends Phaser.Scene{
                 if (this.progress >= 1) {
                     this.progress = 1; // 进度达到100%后停止更新
                     this.waitTimer.remove(); // 移除计时器
-                    this.soundCorrect.play();
+                    utterance.text = "感測完畢";
+                    speechSynthesis.speak(utterance);
                 }
 
                 // 更新进度条长度
