@@ -4,7 +4,7 @@ import Dialog from "../sprite/Dialog.js";
 // import Game2 from "./Game2.js";
 
 var utterance = new SpeechSynthesisUtterance();
-utterance.text = "請持續握住保生大帝的手";
+utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
 utterance.lang = "zh-TW";
 utterance.rate = 1.5;
 
@@ -32,7 +32,11 @@ export default class Game3 extends Phaser.Scene{
         this.text3.setOrigin(0.5);
 
         // 直接作为场景对象属性添加进度条
-        this.progressBar = this.add.sprite(400, 300, 'progressBar').setVisible(false);
+        this.progressBarBg = this.add.sprite(560, 900, 'progressBar');
+        this.progressBarBg.setOrigin(0, 0.5);
+        this.progressBarBg.alpha = 0.5;
+
+        this.progressBar = this.add.sprite(560, 900, 'progressBar').setVisible(false);
         this.progressBar.setOrigin(0, 0.5); // 设置进度条的原点为左侧中心
 
         // 初始进度为0

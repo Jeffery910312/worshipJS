@@ -11,29 +11,29 @@ utterance.rate = 1.7;
 // 定義題庫
 const questions = [
   {
-    question: "拉姆是什麼?",
-    options: ["麻糬", "史萊姆", "植物"],
+    question: "什麼供品代表聰明",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
+    correctAnswer: 0
+  },
+  {
+    question: "什麼供品代表精明細算",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 2
   },
   {
-    question: "超級拉姆一個月多少錢?",
-    options: ["50", "100", "150"],
-    correctAnswer: 2
+    question: "什麼供品代表文思泉湧",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
+    correctAnswer: 4
   },
   {
-    question: "摩爾拉雅雪山在摩爾城堡的哪個方位?",
-    options: ["東", "西", "南"],
+    question: "什麼供品代表勤勞",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 1
   },
   {
-    question: "菩提大伯的拉姆叫什麼名字?",
-    options: ["小陶", "葡萄", "櫻桃"],
-    correctAnswer: 1
-  },
-  {
-    question: "台服麼麼公主的米米號是多少?",
-    options: ["20000000", "20000001", "20000002"],
-    correctAnswer: 1
+    question: "什麼供品代表好彩頭",
+    options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
+    correctAnswer: 3
   },
 ];
 
@@ -55,17 +55,21 @@ while (chosenQuestions.length < 3) {
 export default class Game extends Phaser.Scene{
         constructor(){
         super("gameScene")
+        this.isSpeaking = false ;
     }
     
     create(){
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
-        this.dialog = new Dialog(this);
+        var correct = 0;
+        
 
         // SOP圖片設定
-        this.offerings = this.add.image(965,300,'offerings');
+        this.offerings = this.add.image(965,580,'offerings');
         this.offerings.setVisible(false);
+        this.offerings.setScale(1.2);
 
+        this.dialog = new Dialog(this);
         // // 語音講話
         // speechSynthesis.speak(utterance);
 
@@ -94,6 +98,7 @@ export default class Game extends Phaser.Scene{
         if (answer - 1 === questionObj.correctAnswer) {
             console.log("正確");
             this.soundCorrect.play();
+            correct++;
         } else {
             console.log("錯誤");
             this.soundWrong.play();
@@ -101,39 +106,78 @@ export default class Game extends Phaser.Scene{
         currentQuestionIndex++;
         if (currentQuestionIndex < 3) {
             displayQuestion();
-        } else {
+        } 
+        else if (correct === 3) {
             console.log("遊戲結束！");
             this.textQuestion.setText('按照流程圖祭拜孔子');
             utterance.text = '請開始祭拜孔子';
             speechSynthesis.speak(utterance);
             this.offerings.setVisible(true);
         }
+        else{
+          this.textQuestion.setText('請重新答題，答對3題才能通過');
+          currentQuestionIndex = 0;
+          selectedOptions = [];
+          correct = 0;
+          utterance.text = '請重新答題';
+          speechSynthesis.speak(utterance);
+          clearTimeout = setTimeout(() => {
+            displayQuestion();
+          }, 3000);
+        }
+        
         };
 
         displayQuestion()
 
-        // 监听键盘回答
-        this.input.keyboard.on('keydown-ONE', ()=> {
-            selectedOptions.push(1);
-            checkAnswer(1);
-        });
+        utterance.onstart = () => {
+          this.isSpeaking = true;
+          console.log("正在說話");
+          this.input.keyboard.removeListener('keydown-ONE');
+          this.input.keyboard.removeListener('keydown-TWO');
+          this.input.keyboard.removeListener('keydown-THREE');
+          this.input.keyboard.removeListener('keydown-FOUR');
+          this.input.keyboard.removeListener('keydown-FIVE');
+        };
 
-        this.input.keyboard.on('keydown-TWO', ()=> {
-            selectedOptions.push(2);
-            checkAnswer(2);
-        });
+        utterance.onend = () => {
+          this.isSpeaking = false;
+          console.log("閉嘴");
+          // 添加新的按键监听事件
+          this.input.keyboard.on('keydown-ONE', () => {
+              selectedOptions.push(1);
+              checkAnswer(1);
+          });
+      
+          this.input.keyboard.on('keydown-TWO', () => {
+              selectedOptions.push(2);
+              checkAnswer(2);
+          });
+      
+          this.input.keyboard.on('keydown-THREE', () => {
+              selectedOptions.push(3);
+              checkAnswer(3);
+          });
 
-        this.input.keyboard.on('keydown-THREE', ()=> {
-            selectedOptions.push(3);
-            checkAnswer(3);
-        });
+          this.input.keyboard.on('keydown-FOUR', () => {
+              selectedOptions.push(4);
+              checkAnswer(4);
+          });
+
+          this.input.keyboard.on('keydown-FIVE', () => {
+              selectedOptions.push(5);
+              checkAnswer(5);
+          });
+      };
+      
+      
 
         this.input.keyboard.on('keydown-F', ()=> 
         {
             this.scene.start('game2Scene');
         });
-        
-        }
+      
+    }
 
     update(){
 

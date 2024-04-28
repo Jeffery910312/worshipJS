@@ -12,7 +12,7 @@ import Game3Scene from "./scene/Game3.js"
                 default: 'arcade',
                 arcade: {
                     gravity: { y: 1000 },
-                    debug: true,
+                    debug: false,
                 }
             }
         };
