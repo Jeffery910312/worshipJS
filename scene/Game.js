@@ -61,13 +61,15 @@ export default class Game extends Phaser.Scene{
     create(){
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
-        this.dialog = new Dialog(this);
+        var correct = 0;
+        
 
         // SOP圖片設定
-        this.offerings = this.add.image(965,300,'offerings');
+        this.offerings = this.add.image(965,580,'offerings');
         this.offerings.setVisible(false);
-        this.offerings.setScale(0.3);
+        this.offerings.setScale(1.2);
 
+        this.dialog = new Dialog(this);
         // // 語音講話
         // speechSynthesis.speak(utterance);
 
@@ -96,6 +98,7 @@ export default class Game extends Phaser.Scene{
         if (answer - 1 === questionObj.correctAnswer) {
             console.log("正確");
             this.soundCorrect.play();
+            correct++;
         } else {
             console.log("錯誤");
             this.soundWrong.play();
@@ -103,12 +106,24 @@ export default class Game extends Phaser.Scene{
         currentQuestionIndex++;
         if (currentQuestionIndex < 3) {
             displayQuestion();
-        } else {
+        } 
+        else if (correct === 3) {
             console.log("遊戲結束！");
             this.textQuestion.setText('按照流程圖祭拜孔子');
             utterance.text = '請開始祭拜孔子';
             speechSynthesis.speak(utterance);
             this.offerings.setVisible(true);
+        }
+        else{
+          this.textQuestion.setText('請重新答題，答對3題才能通過');
+          currentQuestionIndex = 0;
+          selectedOptions = [];
+          correct = 0;
+          utterance.text = '請重新答題';
+          speechSynthesis.speak(utterance);
+          clearTimeout = setTimeout(() => {
+            displayQuestion();
+          }, 3000);
         }
         
         };
