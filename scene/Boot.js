@@ -51,7 +51,9 @@ export default class Boot extends Phaser.Scene{
         }, this);
         
         this.load.image("confucius",'assets/confucius.png')
-        // this.load.image("guanwe1Mao",'../assets/guanwe1Mao.png')
+
+        this.load.image("baosheng",'assets/baosheng.png')
+        
         this.load.image("confuciusTemple",'assets/confuciusTemple6.png')
 
         this.load.image("offerings",'assets/offerings.png')

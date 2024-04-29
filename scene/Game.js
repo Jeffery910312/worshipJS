@@ -138,6 +138,7 @@ export default class Game extends Phaser.Scene{
           this.input.keyboard.removeListener('keydown-THREE');
           this.input.keyboard.removeListener('keydown-FOUR');
           this.input.keyboard.removeListener('keydown-FIVE');
+          this.input.keyboard.removeListener('keydown-SIX');
         };
 
         utterance.onend = () => {
@@ -167,6 +168,11 @@ export default class Game extends Phaser.Scene{
           this.input.keyboard.on('keydown-FIVE', () => {
               selectedOptions.push(5);
               checkAnswer(5);
+          });
+
+          this.input.keyboard.on('keydown-SIX', () => {
+              selectedOptions.push(6);
+              checkAnswer(6);
           });
       };
       
