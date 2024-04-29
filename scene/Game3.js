@@ -1,7 +1,7 @@
 import Confucius from "../sprite/Confucius.js";
+import Baosheng from "../sprite/Baosheng.js";
 import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
 import Dialog from "../sprite/Dialog.js";
-// import Game2 from "./Game2.js";
 
 var utterance = new SpeechSynthesisUtterance();
 utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
@@ -22,11 +22,53 @@ export default class Game3 extends Phaser.Scene{
         
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
+        this.baosheng = new Baosheng(this);
         this.dialog = new Dialog(this);
-        // this.game2 = new Game2(this);
 
-        // 添加音效
-        this.soundCorrect = this.sound.add('correct');
+        // 儲存原始的 x 和 y 位置以供後續使用
+        let originalX = this.confucius.x;
+        let originalY = this.confucius.y;
+
+        // 將 'confucius' 精靈水平翻轉
+        this.confucius.flipX = true;
+
+        // 將 'confucius' 移動到指定的座標 (2000, 545)
+        this.tweens.add({
+            targets: this.confucius,
+            x: 2100,
+            y: 545,
+            duration: 1000, // 以毫秒為單位
+            ease: 'Power2',
+            onComplete: () => {
+                // 暫停 0.5 秒
+                this.time.delayedCall(500, () => {
+                    // 將 'confucius' 精靈水平翻轉回原始方向
+                    this.confucius.flipX = false;
+                    this.tweens.add({
+                    targets: this.baosheng,
+                    x: 1150,
+                    duration: 1000, // 动画持续时间（毫秒）
+                    ease: 'Power2',
+                    yoyo: false,
+                    repeat: 0
+                    });
+
+                    // 將 'confucius' 移回原始位置
+                    this.tweens.add({
+                        targets: this.confucius,
+                        x: originalX,
+                        y: originalY,
+                        duration: 1000, // 以毫秒為單位
+                        ease: 'Power2'
+                    });
+                });
+                
+            }
+        });
+
+
+        
+
 
         this.text3 = this.add.text(965, 1020, '請持續握住保生大帝的手', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
         this.text3.setOrigin(0.5);
@@ -45,14 +87,19 @@ export default class Game3 extends Phaser.Scene{
 
         // 模拟等待2分钟的计时器
         this.waitTimer = this.time.addEvent({
-            delay: 150, // 等待时间2分钟
+            // delay: 150, // 等待时间2分钟
+            delay: 10, // 等待10秒
             callback: function() {
                 this.progress += 0.001; // 每次增加1%的进度
                 if (this.progress >= 1) {
                     this.progress = 1; // 进度达到100%后停止更新
                     this.waitTimer.remove(); // 移除计时器
+                    this.text3.setText("感測完畢,等待結果完成");
                     utterance.text = "感測完畢";
                     speechSynthesis.speak(utterance);
+                    setTimeout(() => {
+                        this.scene.start('game4Scene');
+                    }, 5000);
                 }
 
                 // 更新进度条长度
@@ -62,6 +109,8 @@ export default class Game3 extends Phaser.Scene{
             callbackScope: this,
             loop: true // 循环计时器，直到达到指定的总时间
         });
+
+
 
         // this.input.keyboard.on('keydown-F', ()=> 
         // {
