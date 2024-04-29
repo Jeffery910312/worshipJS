@@ -4,7 +4,7 @@ import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
 import Dialog from "../sprite/Dialog.js";
 
 var utterance = new SpeechSynthesisUtterance();
-utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
+// utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
 utterance.lang = "zh-TW";
 utterance.rate = 1.5;
 
@@ -25,6 +25,7 @@ export default class Game3 extends Phaser.Scene{
         this.baosheng = new Baosheng(this);
         this.dialog = new Dialog(this);
 
+
         // 儲存原始的 x 和 y 位置以供後續使用
         let originalX = this.confucius.x;
         let originalY = this.confucius.y;
@@ -41,7 +42,7 @@ export default class Game3 extends Phaser.Scene{
             ease: 'Power2',
             onComplete: () => {
                 // 暫停 0.5 秒
-                this.time.delayedCall(500, () => {
+                this.time.delayedCall(1500, () => {
                     // 將 'confucius' 精靈水平翻轉回原始方向
                     this.confucius.flipX = false;
                     this.tweens.add({
@@ -59,10 +60,54 @@ export default class Game3 extends Phaser.Scene{
                         x: originalX,
                         y: originalY,
                         duration: 1000, // 以毫秒為單位
-                        ease: 'Power2'
+                        ease: 'Power2',
+                        onComplete: () => {
+                            utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
+                            speechSynthesis.speak(utterance);
+
+                            // 顯示進度條
+                            this.text3.setOrigin(0.5);
+
+                            // 直接作为场景对象属性添加进度条
+                            this.progressBarBg = this.add.sprite(560, 900, 'progressBar');
+                            this.progressBarBg.setOrigin(0, 0.5);
+                            this.progressBarBg.alpha = 0.5;
+
+                            this.progressBar = this.add.sprite(560, 900, 'progressBar').setVisible(false);
+                            this.progressBar.setOrigin(0, 0.5); // 设置进度条的原点为左侧中心
+
+                            // 初始进度为0
+                            this.progress = 0;
+                            this.progressBarWidth = this.progressBar.width;
+
+                            // 模拟等待2分钟的计时器
+                            this.waitTimer = this.time.addEvent({
+                                // delay: 150, // 等待时间2分钟
+                                delay: 150, // 等待10秒
+                                callback: function() {
+                                    this.progress += 0.001; // 每次增加1%的进度
+                                    if (this.progress >= 1) {
+                                        this.progress = 1; // 进度达到100%后停止更新
+                                        this.waitTimer.remove(); // 移除计时器
+                                        this.text3.setText("感測完畢,等待結果完成");
+                                        utterance.text = "感測完畢";
+                                        speechSynthesis.speak(utterance);
+                                        setTimeout(() => {
+                                            this.scene.start('game4Scene');
+                                        }, 5000);
+                                    }
+
+                                    // 更新进度条长度
+                                    this.progressBar.setDisplaySize(this.progress * this.progressBarWidth, this.progressBar.height);
+                                    this.progressBar.setVisible(true);
+                                },
+                                callbackScope: this,
+                                loop: true // 循环计时器，直到达到指定的总时间
+                            });
+                        }
                     });
                 });
-                
+
             }
         });
 
@@ -71,44 +116,44 @@ export default class Game3 extends Phaser.Scene{
 
 
         this.text3 = this.add.text(965, 1020, '請持續握住保生大帝的手', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
-        this.text3.setOrigin(0.5);
+        // this.text3.setOrigin(0.5);
 
-        // 直接作为场景对象属性添加进度条
-        this.progressBarBg = this.add.sprite(560, 900, 'progressBar');
-        this.progressBarBg.setOrigin(0, 0.5);
-        this.progressBarBg.alpha = 0.5;
+        // // 直接作为场景对象属性添加进度条
+        // this.progressBarBg = this.add.sprite(560, 900, 'progressBar');
+        // this.progressBarBg.setOrigin(0, 0.5);
+        // this.progressBarBg.alpha = 0.5;
 
-        this.progressBar = this.add.sprite(560, 900, 'progressBar').setVisible(false);
-        this.progressBar.setOrigin(0, 0.5); // 设置进度条的原点为左侧中心
+        // this.progressBar = this.add.sprite(560, 900, 'progressBar').setVisible(false);
+        // this.progressBar.setOrigin(0, 0.5); // 设置进度条的原点为左侧中心
 
-        // 初始进度为0
-        this.progress = 0;
-        this.progressBarWidth = this.progressBar.width;
+        // // 初始进度为0
+        // this.progress = 0;
+        // this.progressBarWidth = this.progressBar.width;
 
-        // 模拟等待2分钟的计时器
-        this.waitTimer = this.time.addEvent({
-            // delay: 150, // 等待时间2分钟
-            delay: 150, // 等待10秒
-            callback: function() {
-                this.progress += 0.001; // 每次增加1%的进度
-                if (this.progress >= 1) {
-                    this.progress = 1; // 进度达到100%后停止更新
-                    this.waitTimer.remove(); // 移除计时器
-                    this.text3.setText("感測完畢,等待結果完成");
-                    utterance.text = "感測完畢";
-                    speechSynthesis.speak(utterance);
-                    setTimeout(() => {
-                        this.scene.start('game4Scene');
-                    }, 5000);
-                }
+        // // 模拟等待2分钟的计时器
+        // this.waitTimer = this.time.addEvent({
+        //     // delay: 150, // 等待时间2分钟
+        //     delay: 150, // 等待10秒
+        //     callback: function() {
+        //         this.progress += 0.001; // 每次增加1%的进度
+        //         if (this.progress >= 1) {
+        //             this.progress = 1; // 进度达到100%后停止更新
+        //             this.waitTimer.remove(); // 移除计时器
+        //             this.text3.setText("感測完畢,等待結果完成");
+        //             utterance.text = "感測完畢";
+        //             speechSynthesis.speak(utterance);
+        //             setTimeout(() => {
+        //                 this.scene.start('game4Scene');
+        //             }, 5000);
+        //         }
 
-                // 更新进度条长度
-                this.progressBar.setDisplaySize(this.progress * this.progressBarWidth, this.progressBar.height);
-                this.progressBar.setVisible(true);
-            },
-            callbackScope: this,
-            loop: true // 循环计时器，直到达到指定的总时间
-        });
+        //         // 更新进度条长度
+        //         this.progressBar.setDisplaySize(this.progress * this.progressBarWidth, this.progressBar.height);
+        //         this.progressBar.setVisible(true);
+        //     },
+        //     callbackScope: this,
+        //     loop: true // 循环计时器，直到达到指定的总时间
+        // });
 
             // // 定义倒计时文本
             // this.timerText = this.add.text(965, 1060, '', { fontFamily: 'Arial', fontSize: 32, color: '#000000' });
