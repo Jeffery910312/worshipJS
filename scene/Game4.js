@@ -30,7 +30,7 @@ export default class Game4 extends Phaser.Scene{
         this.text4 = this.add.text(965,1020,'請稍後，正在檢查您的健康狀態...', { fontFamily: 'Arial', fontSize: 48, color: '#000000' })
         this.text4.setOrigin(0.5);
 
-        utterance.text = "請稍後，正在檢查您的健康狀態...";
+        utterance.text = "請稍後，正在檢查健康狀態...";
         speechSynthesis.speak(utterance);
 
         //加載CSV
