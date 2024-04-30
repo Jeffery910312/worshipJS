@@ -96,9 +96,7 @@ export default class Game3 extends Phaser.Scene{
                                         this.text3.setText("感測完畢,等待結果完成");
                                         utterance.text = "感測完畢";
                                         speechSynthesis.speak(utterance);
-                                        setTimeout(() => {
-                                            this.scene.start('game4Scene');
-                                        }, 1000);
+                                        this.scene.start('game4Scene');  
                                     }
 
                                     // 更新进度条长度

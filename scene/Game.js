@@ -179,6 +179,7 @@ export default class Game extends Phaser.Scene{
         this.input.keyboard.on('keydown-F', ()=> 
         {
             this.scene.start('game2Scene');
+            this.input.keyboard.removeListener('keydown-F');
         });
       
     }

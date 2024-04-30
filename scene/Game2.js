@@ -30,6 +30,7 @@ export default class Game2 extends Phaser.Scene {
         this.input.keyboard.on('keydown-A', ()=> 
         {
             this.textResult.setText('3秒後跳轉...');
+            this.input.keyboard.removeListener('keydown-A');
             setTimeout(() => {
                 this.scene.start('game3Scene');
             }, 3000);
@@ -38,6 +39,7 @@ export default class Game2 extends Phaser.Scene {
         this.input.keyboard.on('keydown-S', ()=> 
         {
             this.textResult.setText('3秒後跳轉...');
+            this.input.keyboard.removeListener('keydown-S');
             setTimeout(() => {
             this.scene.start('game3Scene');
             }, 3000);
@@ -46,6 +48,7 @@ export default class Game2 extends Phaser.Scene {
         this.input.keyboard.on('keydown-D', ()=> 
         {
             this.textResult.setText("3秒後重新開始遊戲...");
+            this.input.keyboard.removeListener('keydown-D');
             setTimeout(() => {
                 location.reload();
             }, 3000);
@@ -58,6 +61,8 @@ export default class Game2 extends Phaser.Scene {
             setTimeout(() => {
             this.scene.start('game3Scene');
             }, 1000);
+            this.input.keyboard.removeListener('keydown-F');
+            
         });
 
         
