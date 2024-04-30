@@ -21,15 +21,17 @@ export default class Dialog extends Phaser.GameObjects.Graphics{
     }
 
     // 显示对话框
-    // showDialog() {
-    //     this.clear(); // 清除原有的绘制
-    //     this.fillRoundedRect(this.rectX, this.rectY, this.rectWidth, this.rectHeight,this.cornerRadius);
-    // }
+    showDialog() {
+        this.clear(); // 清除原有的绘制
+        this.fillRoundedRect(this.rectX, this.rectY, this.rectWidth, this.rectHeight,this.cornerRadius);
+        console.log("show dialog");
+    }
 
     // // 隐藏对话框
-    // hideDialog() {
-    //     this.clear(); // 清除绘制，即隐藏对话框
-    // }
+    hideDialog() {
+        this.clear(); // 清除绘制，即隐藏对话框
+        console.log("hide dialog");
+    }
 
     update(){
         

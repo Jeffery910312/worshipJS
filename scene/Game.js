@@ -175,8 +175,6 @@ export default class Game extends Phaser.Scene{
               checkAnswer(6);
           });
       };
-      
-      
 
         this.input.keyboard.on('keydown-F', ()=> 
         {

@@ -24,6 +24,7 @@ export default class Game3 extends Phaser.Scene{
         this.confucius = new Confucius(this);
         this.baosheng = new Baosheng(this);
         this.dialog = new Dialog(this);
+        this.dialog.hideDialog();
 
 
         // 儲存原始的 x 和 y 位置以供後續使用
@@ -62,10 +63,13 @@ export default class Game3 extends Phaser.Scene{
                         duration: 1000, // 以毫秒為單位
                         ease: 'Power2',
                         onComplete: () => {
+                            
                             utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
                             speechSynthesis.speak(utterance);
 
                             // 顯示進度條
+                            this.dialog.showDialog();
+                            this.text3 = this.add.text(965, 1020, '請持續握住保生大帝的手', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
                             this.text3.setOrigin(0.5);
 
                             // 直接作为场景对象属性添加进度条
@@ -83,7 +87,7 @@ export default class Game3 extends Phaser.Scene{
                             // 模拟等待2分钟的计时器
                             this.waitTimer = this.time.addEvent({
                                 // delay: 150, // 等待时间2分钟
-                                delay: 150, // 等待10秒
+                                delay: 5, // 等待10秒
                                 callback: function() {
                                     this.progress += 0.001; // 每次增加1%的进度
                                     if (this.progress >= 1) {
@@ -94,7 +98,7 @@ export default class Game3 extends Phaser.Scene{
                                         speechSynthesis.speak(utterance);
                                         setTimeout(() => {
                                             this.scene.start('game4Scene');
-                                        }, 5000);
+                                        }, 1000);
                                     }
 
                                     // 更新进度条长度
@@ -115,7 +119,7 @@ export default class Game3 extends Phaser.Scene{
         
 
 
-        this.text3 = this.add.text(965, 1020, '請持續握住保生大帝的手', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
+        // this.text3 = this.add.text(965, 1020, '請持續握住保生大帝的手', { fontFamily: 'Arial', fontSize: 48, color: '#000000' });
         // this.text3.setOrigin(0.5);
 
         // // 直接作为场景对象属性添加进度条
