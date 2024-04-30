@@ -30,7 +30,7 @@ export default class Game4 extends Phaser.Scene{
         // 确保文件路径正确
         // 尝试直接访问文件，看是否可以成功加载
 
-        this.csv = this.cache.text.get('../data/test2.csv');
+        this.csv = this.cache.text.get('https://github.com/Jeffery910312/worshipJS/blob/0402/data/test1.csv');
         if(this.csv) {
         // 在解析之前打印一些调试信息
         console.log('CSV file loaded:', this.csv);
