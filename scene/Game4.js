@@ -30,32 +30,40 @@ export default class Game4 extends Phaser.Scene{
         this.text4 = this.add.text(965,1020,'請稍後，正在檢查您的健康狀態...', { fontFamily: 'Arial', fontSize: 48, color: '#000000' })
         this.text4.setOrigin(0.5);
 
-        utterance.text = "請稍後，正在檢查健康狀態...";
+        var LF_percentage,HF_percentage,LF_HF_ratio;
+
+        utterance.text = "請稍後，正在檢查您的健康狀態...";
         speechSynthesis.speak(utterance);
 
         //加載CSV
         // 确保文件路径正确
         // 尝试直接访问文件，看是否可以成功加载
 
-        fetch('../data/test1.csv')
-        .then(response => response.text())
+        // 客户端代码（浏览器环境）
+        fetch('http://localhost:5500/latestCSV') // 调用服务器端API '/latestCSV'
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch latest CSV file');
+        }
+        return response.text();
+        })
         .then(csv => {
-            console.log('CSV file loaded:', csv);
-            // 继续使用PapaParse解析CSV
-            this.data = Papa.parse(csv).data;
-            this.dialog.dialogData = this.data;
+        console.log('Latest CSV file loaded:', csv);
+            var dataArray = csv.split(',');
+            console.log('Extracted data:', dataArray);
+            LF_percentage = dataArray[20];
+            HF_percentage = dataArray[21];
+            LF_HF_ratio = dataArray[22];
         })
         .catch(error => {
-        console.error('Failed to load CSV file', error);
+            console.error('Failed to load latest CSV file', error);
         });
+
         
         
 
 
         setTimeout(() => {
-            var LF_percentage = this.data[1][9];
-            var HF_percentage = this.data[1][10];
-            var LF_HF_ratio = this.data[1][11];
             console.log(LF_percentage, HF_percentage, LF_HF_ratio); 
             
 
