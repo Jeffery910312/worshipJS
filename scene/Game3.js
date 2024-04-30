@@ -93,9 +93,9 @@ export default class Game3 extends Phaser.Scene{
                                     if (this.progress >= 1) {
                                         this.progress = 1; // 进度达到100%后停止更新
                                         this.waitTimer.remove(); // 移除计时器
-                                        this.text3.setText("感測完畢,等待結果完成");
-                                        utterance.text = "感測完畢";
-                                        speechSynthesis.speak(utterance);
+                                        // this.text3.setText("感測完畢,等待結果完成");
+                                        // utterance.text = "感測完畢";
+                                        // speechSynthesis.speak(utterance);
                                         this.scene.start('game4Scene');  
                                     }
 

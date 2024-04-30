@@ -4,7 +4,6 @@ import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
 import Dialog from "../sprite/Dialog.js";
 
 var utterance = new SpeechSynthesisUtterance();
-// utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
 utterance.lang = "zh-TW";
 utterance.rate = 1.5;
 
@@ -31,11 +30,13 @@ export default class Game4 extends Phaser.Scene{
         this.text4 = this.add.text(965,1020,'請稍後，正在檢查您的健康狀態...', { fontFamily: 'Arial', fontSize: 48, color: '#000000' })
         this.text4.setOrigin(0.5);
 
+        utterance.text = "請稍後，正在檢查您的健康狀態...";
+        speechSynthesis.speak(utterance);
+
         //加載CSV
         // 确保文件路径正确
         // 尝试直接访问文件，看是否可以成功加载
 
-        // 例如 CSV 文件存储在 c:\My Program\JS\worshipJS\data\test1.csv
         fetch('../data/test1.csv')
         .then(response => response.text())
         .then(csv => {
@@ -74,7 +75,7 @@ export default class Game4 extends Phaser.Scene{
                 speechSynthesis.speak(utterance);
             }
 
-        }, 1000);
+        }, 4000);
 
         
     }
