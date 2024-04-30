@@ -9,4 +9,4 @@ npm install express
 ```
 node latestCSV.js
 ```
-ctrl+Y 關閉本地伺服器API
+ctrl+C 關閉本地伺服器API
