@@ -34,7 +34,8 @@ app.get('/latestCSV', (req, res) => {
 
     if (latestFile) {
       const csvContent = readFileSync(join(dataDirectory, latestFile), 'utf8');
-      res.send(csvContent);
+      const htmlFormattedContent = csvContent.replace(/\n/g, ',');
+      res.send(htmlFormattedContent);
     } else {
       res.status(404).send('Failed to determine the latest CSV file');
     }
