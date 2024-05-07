@@ -2,7 +2,7 @@ import Confucius from "../sprite/Confucius.js";
 import Baosheng from "../sprite/Baosheng.js";
 import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
 import Dialog from "../sprite/Dialog.js";
-import e from "express";
+
 
 var utterance = new SpeechSynthesisUtterance();
 utterance.lang = "zh-TW";
@@ -66,46 +66,53 @@ export default class Game4 extends Phaser.Scene{
             console.log(SDNN, LF, HF); 
 
             var type;
+            const SDNN_Upper = 141 + 39;
+            const SDNN_Lower = 141 - 39;
+            const SDNN_Low_Lower = 30;
+            const LF_Upper = 1170 + 416;
+            const LF_Lower = 1170 - 416;
+            const HF_Upper = 975 + 203;
+            const HF_Lower = 975 - 203;
             
             //型態判斷
-            if (SDNN > 141 + 39) {
+            if (SDNN > SDNN_Upper) {
 
-                if (LF > 1170 + 416 && HF > 975 + 203) {
+                if (LF > LF_Upper && HF > HF_Upper) {
                     type = 4;
-                }else if (LF > 1170 + 416 && HF <= 975 + 203 && HF > 975 - 203) {
+                }else if (LF > LF_Upper && HF <= HF_Upper && HF > HF_Lower) {
                     type = 6.1;
-                }else if (LF <= 1170 + 416 && LF > 1170 - 416 && HF > 975 + 203) {
+                }else if (LF <= LF_Upper && LF > LF_Lower && HF > HF_Upper) {
                     type = 6.2;
                 }else {
                     type = 0;
                 }
 
-            } else if (SDNN <= 141 + 39 && SDNN > 141 - 39) {
+            } else if (SDNN <= SDNN_Upper && SDNN > SDNN_Lower) {
 
-                if (LF > 1170 + 416 && HF <= 975 - 203) {
+                if (LF > LF_Upper && HF <= HF_Lower) {
                     type = 1;
-                } else if (LF > 1170 - 416 && HF > 975 + 203) {
+                } else if (LF > LF_Lower && HF > HF_Upper) {
                     type = 2;
-                }else if (LF <= 1170 + 416 && LF > 1170 - 416 && HF <= 975 + 203 && HF > 975 - 203) {
+                }else if (LF <= LF_Upper && LF > LF_Lower && HF <= HF_Upper && HF > HF_Lower) {
                     type = 8;
                 }else {
                     type = 0;
                 }
 
-            } else if (SDNN <= 141 - 39 && SDNN > 30) {
+            } else if (SDNN <= SDNN_Lower && SDNN > SDNN_Low_Lower) {
 
-                if (LF <= 1170 - 416 && HF <= 975 - 203) {
+                if (LF <= LF_Lower && HF <= HF_Lower) {
                     type = 3;
-                }else if (LF <= 1170 - 416 && HF > 975 - 203 && HF <= 975 + 203) {
+                }else if (LF <= LF_Lower && HF > HF_Lower && HF <= HF_Upper) {
                     type = 7.1;
-                }else if (LF <= 1170 + 416 && LF > 1170 - 416 && HF <= 975 - 203) {
+                }else if (LF <= LF_Upper && LF > LF_Lower && HF <= HF_Lower) {
                     type = 7.2;
                 }else {
                     type = 0;
                 }
                     
-            } else if (SDNN <= 30) {
-                if (LF <= 1170 - 416 && HF <= 975 - 203) {
+            } else if (SDNN <= SDNN_Low_Lower) {
+                if (LF <= LF_Lower && HF <= HF_Lower) {
                     type = 5;
                 }else {
                     type = 0;   
@@ -176,7 +183,9 @@ export default class Game4 extends Phaser.Scene{
 
             this.input.keyboard.on('keydown-D', ()=> 
             {
-                this.textResult.setText("3秒後重新開始遊戲...");
+                this.text4.setText("3秒後重新開始...");
+                utterance.text = "3秒後重新開始";
+                speechSynthesis.speak(utterance);
                 this.input.keyboard.removeListener('keydown-D');
                 setTimeout(() => {
                     location.reload();
