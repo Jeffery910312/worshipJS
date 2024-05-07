@@ -64,7 +64,7 @@ export default class Game3 extends Phaser.Scene{
                         ease: 'Power2',
                         onComplete: () => {
                             
-                            utterance.text = "請持續握住保生大帝的手，等待進度條完成。";
+                            utterance.text = "請持續握住保生大帝的手，等待測量完成。";
                             speechSynthesis.speak(utterance);
 
                             // 顯示進度條
