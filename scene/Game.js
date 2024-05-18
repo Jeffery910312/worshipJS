@@ -1,9 +1,13 @@
 import Confucius from "../sprite/Confucius.js";
 import ConfuciusTemple from "../sprite/ConfuciusTemple.js";
 import Dialog from "../sprite/Dialog.js";
+import AnimateText from "../sprite/animatetext.js";
 
 // 語音講話設定
 var utterance = new SpeechSynthesisUtterance();
+const animateText = new AnimateText(this);
+animateText.init();
+animateText.setFontSize(48);
 utterance.text = "遊戲開始";
 utterance.lang = "zh-TW";
 utterance.rate = 1.7;
@@ -11,27 +15,27 @@ utterance.rate = 1.7;
 // 定義題庫
 const questions = [
   {
-    question: "什麼供品代表聰明",
+    question: "什麼供品\n代表聰明",
     options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 0
   },
   {
-    question: "什麼供品代表精明細算",
+    question: "什麼供品\n代表精明細算",
     options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 2
   },
   {
-    question: "什麼供品代表文思泉湧",
+    question: "什麼供品\n代表\n文思泉湧",
     options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 4
   },
   {
-    question: "什麼供品代表勤勞",
+    question: "什麼供品\n代表勤勞",
     options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 1
   },
   {
-    question: "什麼供品代表好彩頭",
+    question: "什麼供品\n代表好彩頭",
     options: ["青蔥", "芹菜","大蒜","蘿蔔", "礦泉水"],
     correctAnswer: 3
   },
@@ -62,6 +66,7 @@ export default class Game extends Phaser.Scene{
         this.confuciusTemple = new ConfuciusTemple(this);
         this.confucius = new Confucius(this);
         var correct = 0;
+
         
 
         // SOP圖片設定
@@ -84,7 +89,7 @@ export default class Game extends Phaser.Scene{
         // 顯示問題
         const displayQuestion = () => {
         const questionObj = questions[chosenQuestions[currentQuestionIndex]];
-        this.textQuestion.setText(questionObj.question);
+        animateText.updateText(questionObj.question);
         utterance.text = questionObj.question;
         speechSynthesis.speak(utterance);
         questionObj.options.forEach((option, index) => {
@@ -121,7 +126,7 @@ export default class Game extends Phaser.Scene{
           correct = 0;
           utterance.text = '請重新答題';
           speechSynthesis.speak(utterance);
-          clearTimeout = setTimeout(() => {
+          setTimeout(() => {
             displayQuestion();
           }, 3000);
         }

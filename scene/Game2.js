@@ -27,23 +27,28 @@ export default class Game2 extends Phaser.Scene {
         this.textResult.setOrigin(0.5);
 
         
-        this.input.keyboard.on('keydown-A', ()=> 
-        {
+        this.input.keyboard.on('keydown-A', () => {
             this.textResult.setText('3秒後跳轉...');
             this.input.keyboard.removeListener('keydown-A');
-            setTimeout(() => {
+            document.addEventListener('keydown', (event) => {
+                if (event.key >= '1' && event.key <= '6') {
                 this.scene.start('game3Scene');
-            }, 3000);
-        });
+                console.log('你按下了数字键：' + event.key);
+                }
+            });
+         });
         
-        this.input.keyboard.on('keydown-S', ()=> 
-        {
+        this.input.keyboard.on('keydown-S', () => {
             this.textResult.setText('3秒後跳轉...');
             this.input.keyboard.removeListener('keydown-S');
-            setTimeout(() => {
-            this.scene.start('game3Scene');
-            }, 3000);
-        });
+            document.addEventListener('keydown', (event) => {
+                if (event.key >= '1' && event.key <= '6') {
+                this.scene.start('game3Scene');
+                console.log('你按下了数字键：' + event.key);
+                }
+            });
+         });
+
         
         this.input.keyboard.on('keydown-D', ()=> 
         {

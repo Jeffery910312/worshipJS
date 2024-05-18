@@ -41,6 +41,7 @@ app.get('/latestCSV', (req, res) => {
     }
   });
 });
-app.listen(5500, () => {
-  console.log('Server is running on port 5500');
+app.listen(5500, '127.0.0.1', () => {
+  console.log('Server is running on http://127.0.0.1:5500');
 });
+

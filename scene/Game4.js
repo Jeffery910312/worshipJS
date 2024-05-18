@@ -40,7 +40,7 @@ export default class Game4 extends Phaser.Scene{
         this.input.keyboard.on('keydown-H', ()=> 
             {
             // 客户端代码（浏览器环境）
-            fetch('http://localhost:5500/latestCSV') // 调用本地服务器端API '/latestCSV'
+            fetch('http://127.0.0.1:5500/latestCSV') // 调用本地服务器端API '/latestCSV'
             .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch latest CSV file');
@@ -63,7 +63,7 @@ export default class Game4 extends Phaser.Scene{
             
 
 
-            // setTimeout(() => {
+            setTimeout(() => {
                 console.log(SDNN, LF, HF); 
 
                 var type;
@@ -77,8 +77,12 @@ export default class Game4 extends Phaser.Scene{
                 
                 //型態判斷
                 if (SDNN > SDNN_Upper) {
-
-                    if (LF > LF_Upper && HF > HF_Upper) {
+                    
+                    if (LF > LF_Upper && HF <= HF_Lower) {
+                        type = 1;
+                    } else if (LF <= LF_Lower && HF > HF_Upper) {
+                        type = 2;
+                    }else if (LF > LF_Upper && HF > HF_Upper) {
                         type = 4;
                     }else if (LF > LF_Upper && HF <= HF_Upper && HF > HF_Lower) {
                         type = 6.1;
@@ -92,7 +96,7 @@ export default class Game4 extends Phaser.Scene{
 
                     if (LF > LF_Upper && HF <= HF_Lower) {
                         type = 1;
-                    } else if (LF > LF_Lower && HF > HF_Upper) {
+                    } else if (LF <= LF_Lower && HF > HF_Upper) {
                         type = 2;
                     }else if (LF <= LF_Upper && LF > LF_Lower && HF <= HF_Upper && HF > HF_Lower) {
                         type = 8;
@@ -102,7 +106,11 @@ export default class Game4 extends Phaser.Scene{
 
                 } else if (SDNN <= SDNN_Lower && SDNN > SDNN_Low_Lower) {
 
-                    if (LF <= LF_Lower && HF <= HF_Lower) {
+                    if (LF > LF_Upper && HF <= HF_Lower) {
+                        type = 1;
+                    } else if (LF <= LF_Lower && HF > HF_Upper) {
+                        type = 2;
+                    }else if (LF <= LF_Lower && HF <= HF_Lower) {
                         type = 3;
                     }else if (LF <= LF_Lower && HF > HF_Lower && HF <= HF_Upper) {
                         type = 7.1;
@@ -113,13 +121,24 @@ export default class Game4 extends Phaser.Scene{
                     }
                         
                 } else if (SDNN <= SDNN_Low_Lower) {
-                    if (LF <= LF_Lower && HF <= HF_Lower) {
+                    if (LF > LF_Upper && HF <= HF_Lower) {
+                        type = 1;
+                    } else if (LF <= LF_Lower && HF > HF_Upper) {
+                        type = 2;
+                    }else if (LF <= LF_Lower && HF <= HF_Lower) {
                         type = 5;
                     }else {
                         type = 0;   
                     }
-                }else {
-                    type = 0;   
+                } else {
+
+                    if (LF > LF_Upper && HF <= HF_Lower) {
+                        type = 1;
+                    } else if (LF <= LF_Lower && HF > HF_Upper) {
+                        type = 2;
+                    }else {
+                        type = 0;  
+                    } 
                 }
                 
                 //輸出
@@ -194,7 +213,7 @@ export default class Game4 extends Phaser.Scene{
                     
             });
 
-            // }, 4000);
+            }, 500);
 
         
         });

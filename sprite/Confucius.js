@@ -13,6 +13,7 @@ export default class Confucius extends Phaser.GameObjects.Sprite{
 
          
     }
+    
     update(){
         
     }
